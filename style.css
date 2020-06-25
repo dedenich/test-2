@@ -69,7 +69,6 @@ form[name="header__mode-switcher"] input:checked+label {
   font-size: 1.8rem;
 }
 
-
 .convert__card input {
   height: 40px;
   width: 80px;
@@ -77,4 +76,8 @@ form[name="header__mode-switcher"] input:checked+label {
   border-radius: 8px;
   font-family: 'Jost', sans-serif;
   font-size: 1.8rem;
+}
+
+#main .hidden {
+  display: none;
 }
