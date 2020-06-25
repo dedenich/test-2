@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Валюты</title>
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="header">
+    <form action="#" name="header__mode-switcher">
+      <input type="radio" name="mode-switcher__mode" id="curr" checked>
+      <label for="curr">КУРСЫ ВАЛЮТ</label>
+      <input type="radio" name="mode-switcher__mode" id="conv">
+      <label for="conv">КОНВЕРТЕР</label>
+    </form>
+  </header>
+  <main id="main">
+    <section class="card exchange__card">
+      <select name="curr-select" id="select-base-exch">
+        <option value="" disabled selected hidden>Выберите валюту</option>
+        <option value="112">12</option>
+        <option value="112">12</option>
+        <option value="112">12</option>
+        <option value="112">12</option>
+      </select>
+      <ul>
+        <li><span class="curr__name">BYN</span><span class="curr__value">12.2</span></li>
+        <li><span class="curr__name">BYN</span><span class="curr__value">12.2</span></li>
+        <li><span class="curr__name">BYN</span><span class="curr__value">12.2</span></li>
+        <li><span class="curr__name">BYN</span><span class="curr__value">12.2</span></li>
+      </ul>
+    </section>
+    <section class="card convert__card">
+      <form action="#" name="converter" id="conv">
+        <select name="base" id="select-base-conv">
+          <option value="" disabled selected hidden>Из</option>
+          <option value="12">2</option>
+        </select>
+        <input type="number">
+        <select name="comp" id="select-comp-conv">
+          <option value="" disabled selected hidden>В</option>
+          <option value="12">2</option>
+        </select>
+        <input type="number">
+      </form>
+    </section>
+  </main>
+</body>
+</html>

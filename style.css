@@ -1,0 +1,80 @@
+html {
+  font-family: 'Jost', sans-serif;
+  font-size: 10px;
+}
+
+body {
+  background-color: #f1f1f1;
+}
+
+.header {
+  height: 90px;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+form[name="header__mode-switcher"] {
+  margin: 40px auto;
+}
+
+form[name="header__mode-switcher"] input {
+  display: none;
+}
+
+form[name="header__mode-switcher"] label {
+  padding: 12px;
+}
+
+form[name="header__mode-switcher"] input:checked+label {
+  background-color: rgba(62, 147, 216, 0.4);
+  border-radius: 8px;
+}
+
+#main .card {
+  display: block;
+  width: 800px;
+  margin: 0 auto;
+  border: 2px solid #818181;
+  border-radius: 16px;
+  text-align: center;
+  padding: 20px;
+  background-color: #ffffff;
+}
+
+#main .card select {
+  height: 40px;
+  width: 180px;
+  border: 1px #818181 solid;
+  border-radius: 8px;
+  font-family: 'Jost', sans-serif;
+  font-size: 1.8rem;
+}
+
+.exchange__card ul {
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  margin: 30px auto;
+}
+
+.exchange__card ul li {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 30px;
+  border-bottom: 1px #dbdbdb solid;
+  font-size: 1.8rem;
+}
+
+
+.convert__card input {
+  height: 40px;
+  width: 80px;
+  border: 1px #818181 solid;
+  border-radius: 8px;
+  font-family: 'Jost', sans-serif;
+  font-size: 1.8rem;
+}
