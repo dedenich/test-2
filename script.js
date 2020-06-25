@@ -1,10 +1,22 @@
-let rates = {};
+let favCurs;
 
+updateFavs();
+async function updateFavs() {
+  if (!localStorage.getItem('fav')) {
+    localStorage.setItem('fav', JSON.stringify([]));
+    favCurs = [];
+  } else favCurs = await JSON.parse(localStorage.getItem('fav'));
+}
+
+let rates;
+executeFetch();
 async function executeFetch() {
   const resp = await fetch('https://api.exchangeratesapi.io/latest');
   const data = await resp.json();
   rates = data.rates;
 };
+
+let currencies = {};
 
 async function getRates() {
   await executeFetch();
@@ -12,7 +24,11 @@ async function getRates() {
 }
 
 async function setOptions() {
-  const currencies = await getRates();
+  if (!rates) {
+    currencies = await getRates();
+  } else {
+    currencies = rates;
+  }
   const selects = document.getElementsByTagName('select');
   [...selects].forEach((it) => {
     Object.keys(currencies).forEach((curr) => {
@@ -26,33 +42,47 @@ async function setOptions() {
 
 setOptions();
 
-async function setRates() {
-  const currencies = await getRates();
+const ul = document.getElementById('ul');
+
+function renderList (currencies) {
   for (let item in currencies) {
-    const el = `<li><span class="curr__name">${item}</span><span class="curr__value">${currencies[item]}</span></li>`;
-    document.getElementById('ul').innerHTML += el;
+    if (favCurs.includes(item)) {
+      const el = `<li><span class="fav clicked">★</span><span class="curr__name">${item}</span><span class="curr__value">${currencies[item]}</span></li>`;
+      ul.insertAdjacentHTML('afterbegin', el);
+    } else {
+      const el = `<li><span class="fav">★</span><span class="curr__name">${item}</span><span class="curr__value">${currencies[item]}</span></li>`;
+      ul.innerHTML += el;
+    }
   }
+}
+
+async function setRates() {
+  if (!rates) {
+    currencies = await getRates();
+  } else {
+    currencies = rates;
+  }
+  renderList(currencies);
 }
 
 setRates();
 
-function setRatesChanged(currencies) {
-  document.getElementById('ul').innerHTML='';
-  for (let item in currencies) {
-    const el = `<li><span class="curr__name">${item}</span><span class="curr__value">${currencies[item]}</span></li>`;
-    document.getElementById('ul').innerHTML += el;
-  }
+async function setRatesChanged(currencies) {
+  ul.innerHTML='';
+  renderList(currencies);
 }
 
 document.getElementById('select-base-exch').addEventListener('change', async (e) => {
-  const currencies = await getRates();
-  let c = {};
+  if (!rates) {
+    currencies = await getRates();
+  } else {
+    currencies = rates;
+  }
   for (let item in currencies) {
     currencies[item] = Number(currencies[item]/currencies[e.target.value]).toFixed(3);
   }
   setRatesChanged(currencies);
   localStorage.setItem('base', e.target.value);
-
 }) 
 
 const cards = document.querySelectorAll('.card');
@@ -74,10 +104,24 @@ const outCur = document.getElementById('select-comp-conv');
 
 document.getElementById('input-conv').addEventListener('input', async (e) => {
   if (![...convSelects].every((i) => i.value == '')) {
-    const currencies = await getRates();
-    const am = e.target.value;
-    const inRate = currencies[inCur.value];
-    const outRate = currencies[outCur.value];
+    if (!rates) {
+    currencies = await getRates();
+  } else {
+    currencies = rates;
+  }
+    const am = Number(e.target.value);
+    const inRate = Number(currencies[inCur.value]);
+    const outRate = Number(currencies[outCur.value]);
     document.getElementById('output-conv').value = ((am*inRate)/outRate).toFixed(2);
+  }
+});
+
+ul.addEventListener('click', (e) => {
+  if (e.target.classList.contains('fav')) {
+    e.target.classList.toggle('clicked');
+    if (e.target.classList.contains('clicked')) {
+      favCurs.push(e.target.nextSibling.innerHTML);
+    } else favCurs.pop(e.target.nextSibling.innerHTML);
+    localStorage.setItem('fav', JSON.stringify(favCurs));
   }
 })

@@ -81,3 +81,20 @@ form[name="header__mode-switcher"] input:checked+label {
 #main .hidden {
   display: none;
 }
+
+#ul .fav {
+  position: absolute;
+  left: calc(50vw - 240px);
+  color: #88a7ca;
+  opacity: 0.1;
+  transition: ease-in 0.2s;
+}
+
+#ul .fav:hover {
+  opacity: 1;
+  transition: ease-in 0.2s;
+}
+
+#ul .fav.clicked {
+  opacity: 1;
+}
